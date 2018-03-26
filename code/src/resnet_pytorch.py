@@ -24,7 +24,7 @@ class IdentityBLock(nn.Module):
 
         out = self.conv(out)
         out = self.bn(out)
-        out = self.relu(out)
+#         out = self.relu(out)
 
         out += residual
         out = self.relu(out)
@@ -84,9 +84,11 @@ class ResNet(nn.Module):
         x = self.dropout(x)
         x = self.conv3(x)
         x = self.pool(x)
+        x = self.dropout(x)
         x = x.view(-1, reduce(mul, x.size()[1:]))
-        x = self.relu(self.fc1(x))
-        # x = self.softmax(self.fc2(x))
-        x = self.softmax(self.dropout(self.fc2(x)))
+#         x = self.relu(self.fc1(x))
+        x = self.relu(self.dropout(self.fc1(x)))
+        x = self.softmax(self.fc2(x))
+#         x = self.softmax(self.dropout(self.fc2(x)))
 
         return x
